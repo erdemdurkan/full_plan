@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 
@@ -262,7 +261,7 @@
     </div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
   <script>
     function showSelectedFile(input, filenameId, uploadBoxId) {
       const filenameDiv = document.getElementById(filenameId);
@@ -422,9 +421,9 @@
           }
         }
 
-        const newSheet = XLSX.utils.json_to_sheet(pData);
-      const newWb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(newWb, newSheet, "MONTAJPROGRAM");
+        const wbOut = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wbOut, ws, "q1");
+        XLSX.writeFile(wbOut, "Guncel_PLAN.xlsx");
       });
     }
   </script>
