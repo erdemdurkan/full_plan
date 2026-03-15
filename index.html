@@ -117,6 +117,57 @@ transition:0.2s;
 transform:translateY(-1px);
 box-shadow:0 5px 15px rgba(0,150,255,0.4);
 }
+  .upload-box{
+margin-bottom:18px;
+}
+
+.drop-area{
+position:relative;
+padding:20px;
+border-radius:10px;
+background:rgba(255,255,255,0.08);
+border:1px dashed rgba(255,255,255,0.25);
+cursor:pointer;
+transition:0.3s;
+}
+
+.drop-area:hover{
+background:rgba(0,170,255,0.12);
+border-color:#0aa6ff;
+}
+
+.drop-area input{
+position:absolute;
+width:100%;
+height:100%;
+opacity:0;
+cursor:pointer;
+}
+
+.upload-content{
+text-align:center;
+}
+
+.upload-icon{
+font-size:28px;
+transition:0.3s;
+}
+
+.drop-area:hover .upload-icon{
+transform:scale(1.2) rotate(-8deg);
+}
+
+.upload-text{
+font-size:13px;
+color:#cfd8dc;
+margin-top:5px;
+}
+
+.file-name{
+margin-top:6px;
+font-size:12px;
+color:#4fc3f7;
+}
 </style>
 
 </head>
@@ -135,14 +186,41 @@ box-shadow:0 5px 15px rgba(0,150,255,0.4);
 
 <hr class="divider">
 
-<p>EX_STOK.xlsx</p>
-<input class="file-input" type="file" id="stok"><br><br>
+<div class="upload-box">
+    <label>EX_STOK.xlsx</label>
+    <div class="drop-area" id="stokArea">
+        <input type="file" id="stok">
+        <div class="upload-content">
+            <div class="upload-icon">📂</div>
+            <div class="upload-text">Dosya seç veya sürükle bırak</div>
+            <div class="file-name" id="stokName"></div>
+        </div>
+    </div>
+</div>
 
-<p>EX_URETIM2.xlsx</p>
-<input class="file-input" type="file" id="uretim"><br><br>
+<div class="upload-box">
+    <label>EX_URETIM2.xlsx</label>
+    <div class="drop-area" id="uretimArea">
+        <input type="file" id="uretim">
+        <div class="upload-content">
+            <div class="upload-icon">📂</div>
+            <div class="upload-text">Dosya seç veya sürükle bırak</div>
+            <div class="file-name" id="uretimName"></div>
+        </div>
+    </div>
+</div>
 
-<p>MONTAJ_PROGRAM_OLUSTUR.xlsm</p>
-<input class="file-input" type="file" id="montaj"><br><br>
+<div class="upload-box">
+    <label>MONTAJ_PROGRAM_OLUSTUR.xlsm</label>
+    <div class="drop-area" id="montajArea">
+        <input type="file" id="montaj">
+        <div class="upload-content">
+            <div class="upload-icon">📂</div>
+            <div class="upload-text">Dosya seç veya sürükle bırak</div>
+            <div class="file-name" id="montajName"></div>
+        </div>
+    </div>
+</div>
 
 <p>Gün sıralaması</p>
 
@@ -369,6 +447,24 @@ XLSX.writeFile(newWb,"MONTAJ_PROGRAM_GUNCEL.xlsx")
 document.getElementById("durum").innerText="Tamamlandı"
 
 }
+  function showFileName(inputId, labelId){
+
+document.getElementById(inputId).addEventListener("change",function(){
+
+if(this.files.length>0){
+
+document.getElementById(labelId).innerText =
+"✔ " + this.files[0].name
+
+}
+
+})
+
+}
+
+showFileName("stok","stokName")
+showFileName("uretim","uretimName")
+showFileName("montaj","montajName")
 
 </script>
 
