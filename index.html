@@ -254,6 +254,7 @@ return XLSX.utils.sheet_to_json(ws,{defval:0})
 
 async function baslat(){
 
+  document.getElementById("hesaplaBtn").addEventListener("click", baslat);
 document.getElementById("durum").innerText="Dosyalar okunuyor..."
 
 const stokFile=document.getElementById("stok").files[0]
