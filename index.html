@@ -27,6 +27,42 @@ color:white;
 backdrop-filter: blur(6px);
 }
 button{padding:10px 18px;font-size:16px;margin-top:12px}
+  .header{
+display:flex;
+align-items:center;
+gap:15px;
+margin-bottom:20px;
+}
+
+.header-icon{
+font-size:28px;
+background:#0aa6ff;
+width:46px;
+height:46px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:10px;
+}
+
+.header h1{
+margin:0;
+font-size:22px;
+font-weight:600;
+}
+
+.header p{
+margin:0;
+font-size:13px;
+color:#cfd8dc;
+}
+
+.divider{
+border:none;
+height:1px;
+background:rgba(255,255,255,0.15);
+margin-bottom:20px;
+}
 </style>
 
 </head>
@@ -35,7 +71,15 @@ button{padding:10px 18px;font-size:16px;margin-top:12px}
 
 <div class="panel">
 
-<h2>Montaj Program Güncelle</h2>
+<div class="header">
+    <div class="header-icon">⚙️</div>
+    <div>
+        <h1>Montaj Program</h1>
+        <p>Excel montaj planını otomatik güncelle</p>
+    </div>
+</div>
+
+<hr class="divider">
 
 <p>EX_STOK.xlsx</p>
 <input type="file" id="stok"><br><br>
