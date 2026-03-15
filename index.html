@@ -1,432 +1,260 @@
+
 <!DOCTYPE html>
-<html lang="tr">
-
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>110 STOK ve SONMONTAJ Düşürme Aracı</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-  <style>
-    body {
-      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
-      min-height: 100vh;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(120deg, #6a8dff, #a084ee, #7f53ac, #647dee);
-      background-size: 400% 400%;
-      animation: gradientBG 12s ease infinite;
-    }
+<meta charset="UTF-8">
+<title>Montaj Program Hesaplayıcı</title>
 
-    @keyframes gradientBG {
-      0% {
-        background-position: 0% 50%;
-      }
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style/dist/xlsx.bundle.js"></script>
 
-      50% {
-        background-position: 100% 50%;
-      }
+<style>
+body{font-family:Arial;background:#f5f5f5;margin:40px}
+.panel{background:white;padding:25px;border-radius:8px;width:640px}
+button{padding:10px 18px;font-size:16px;margin-top:12px}
+</style>
 
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-
-    .card {
-      max-width: 480px;
-      margin: 60px auto;
-      background: #fff;
-      border-radius: 22px;
-      box-shadow: 0 8px 32px rgba(80, 80, 160, 0.15);
-      padding: 38px 36px 32px 36px;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(40px) scale(0.98);
-      animation: cardIn 1s cubic-bezier(.68, -0.55, .27, 1.55) 0.3s forwards;
-    }
-
-    @keyframes cardIn {
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    .badge {
-      display: inline-block;
-      background: linear-gradient(90deg, #7f53ac, #a084ee);
-      color: #fff;
-      font-size: 0.95rem;
-      font-weight: 500;
-      border-radius: 8px;
-      padding: 5px 16px;
-      margin-bottom: 18px;
-      opacity: 0;
-      transform: translateY(10px);
-      animation: fadeUp 0.7s 0.5s forwards;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: #7f53ac;
-      letter-spacing: 0.5px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.8s 0.7s forwards;
-      margin: 0 0 10px 0;
-    }
-
-    h2 {
-      font-size: 2.1rem;
-      font-weight: 700;
-      color: #7f53ac;
-      letter-spacing: 0.5px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.8s 0.7s forwards;
-      margin: 0 0 10px 0;
-    }
-
-    @keyframes fadeUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .card p {
-      color: #6b7280;
-      margin-bottom: 22px;
-      font-size: 1.05rem;
-    }
-
-    .upload-box {
-      border: 2px dashed #a084ee;
-      border-radius: 14px;
-      background: #f7f8fd;
-      padding: 24px 20px;
-      margin: 18px 0;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      cursor: pointer;
-      position: relative;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.8s 1s forwards;
-    }
-
-    .upload-box:hover {
-      box-shadow: 0 8px 25px rgba(160, 132, 238, 0.15);
-      border-color: #7f53ac;
-      background: #f0f4ff;
-      transform: translateY(-2px);
-    }
-
-    .upload-box:nth-child(2) {
-      animation-delay: 1.2s;
-    }
-
-    .upload-box input[type="file"] {
-      display: none;
-    }
-
-    .upload-label {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: #7f53ac;
-      font-weight: 500;
-      font-size: 1.05rem;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    .upload-label:hover {
-      transform: scale(1.02);
-    }
-
-    .upload-icon {
-      width: 48px;
-      height: 48px;
-      margin-bottom: 12px;
-      padding: 12px;
-      background: linear-gradient(135deg, #a084ee, #7f53ac);
-      border-radius: 50%;
-      color: white;
-      transition: transform 0.3s;
-    }
-
-    .upload-box:hover .upload-icon {
-      transform: rotateY(180deg) scale(1.1);
-    }
-
-    .upload-title {
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .upload-subtitle {
-      font-size: 0.9rem;
-      color: #888;
-      opacity: 0.8;
-    }
-
-    .button {
-      background: linear-gradient(135deg, #7f53ac, #647dee, #6a8dff);
-      background-size: 200% 200%;
-      color: #fff;
-      border: none;
-      border-radius: 12px;
-      padding: 16px 0;
-      width: 100%;
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-top: 28px;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(100, 125, 222, 0.15);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeUp 0.8s 1.5s forwards;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .button:hover {
-      background-position: 100% 0;
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 8px 25px rgba(100, 125, 222, 0.25);
-    }
-
-    .button:active {
-      transform: translateY(0) scale(0.98);
-    }
-
-    .button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s;
-    }
-
-    .button:hover::before {
-      left: 100%;
-    }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      .card {
-        max-width: 98vw;
-        padding: 18px 4vw 18px 4vw;
-      }
-    }
-  </style>
 </head>
 
 <body>
-  <div class="card">
-    <div class="badge">✨ Excel İşleyici</div>
-    <h1>110 STOK Düşürme Aracı</h1>
-    <p>Excel dosyalarınızı yükleyip otomatik hesaplama yapın</p>
 
-    <div class="upload-section">
-      <div class="upload-box" id="upload1" onclick="document.getElementById('file1').click()">
-        <label class="upload-label">
-          <div class="upload-icon">📁</div>
-          <div class="upload-text">EX_STOK Dosyasını Yükle</div>
-          <div class="upload-hint">Dosya seçmek için tıklayın (.xlsx, .xls)</div>
-          <div class="file-name" id="filename1"
-            style="display: none; margin-top: 8px; color: #10b981; font-weight: 600; font-size: 0.9rem;"></div>
-        </label>
-        <input type="file" id="file1" accept=".xlsx,.xls" onchange="showSelectedFile(this, 'filename1', 'upload1')"
-          style="display: none;">
-      </div>
+<div class="panel">
 
-      <div class="upload-box" id="upload2" onclick="document.getElementById('file2').click()">
-        <label class="upload-label">
-          <div class="upload-icon">📁</div>
-          <div class="upload-text">İndirdiğiniz Montaj Plan Dosyasını Yükle</div>
-          <div class="upload-hint">Dosya seçmek için tıklayın (.xlsx, .xlsm)</div>
-          <div class="file-name" id="filename2"
-            style="display: none; margin-top: 8px; color: #10b981; font-weight: 600; font-size: 0.9rem;"></div>
-        </label>
-        <input type="file" id="file2" accept=".xlsx,.xlsm" onchange="showSelectedFile(this, 'filename2', 'upload2')"
-          style="display: none;">
-      </div>
+<h2>Montaj Program Güncelle</h2>
 
-      <button type="button" class="button" onclick="convert()">🚀 İŞLEMİ BAŞLAT</button>
-    </div>
-  </div>
+<p>EX_STOK.xlsx</p>
+<input type="file" id="stok"><br><br>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
-  <script>
-    function showSelectedFile(input, filenameId, uploadBoxId) {
-      const filenameDiv = document.getElementById(filenameId);
-      const uploadBox = document.getElementById(uploadBoxId);
-      const uploadHint = uploadBox.querySelector('.upload-hint');
+<p>EX_URETIM2.xlsx</p>
+<input type="file" id="uretim"><br><br>
 
-      if (input.files && input.files[0]) {
-        const fileName = input.files[0].name;
-        filenameDiv.textContent = `✅ ${fileName}`;
-        filenameDiv.style.display = 'block';
-        uploadHint.style.display = 'none';
-        uploadBox.style.borderColor = '#10b981';
-        uploadBox.style.backgroundColor = '#f0fdf4';
-      }
-    }
+<p>MONTAJ_PROGRAM_OLUSTUR.xlsm</p>
+<input type="file" id="montaj"><br><br>
 
-    async function readFile(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = e => {
-          const data = new Uint8Array(e.target.result);
-          const workbook = XLSX.read(data, { type: 'array' });
-          resolve(workbook);
-        };
-        reader.onerror = err => reject(err);
-        reader.readAsArrayBuffer(file);
-      });
-    }
+<p>Gün sıralaması</p>
 
-    function toText(val) {
-      return String(val || '').trim().toUpperCase();
-    }
+<select id="gun">
+<option value="BUGUN,CUMARTESİ,PAZAR">BUGUN,CUMARTESİ,PAZAR</option>
+<option value="BUGUN,PAZAR,PAZARTESİ">BUGUN,PAZAR,PAZARTESİ</option>
+<option value="BUGUN,PAZARTESİ,SALI">BUGUN,PAZARTESİ,SALI</option>
+<option value="BUGUN,SALI,ÇARŞAMBA">BUGUN,SALI,ÇARŞAMBA</option>
+<option value="BUGUN,ÇARŞAMBA,PERŞEMBE">BUGUN,ÇARŞAMBA,PERŞEMBE</option>
+<option value="BUGUN,PERŞEMBE,CUMA">BUGUN,PERŞEMBE,CUMA</option>
+<option value="BUGUN,CUMA,CUMARTESİ">BUGUN,CUMA,CUMARTESİ</option>
+</select>
 
-    function convert() {
-      const file1 = document.getElementById('file1').files[0];
-      const file2 = document.getElementById('file2').files[0];
+<br>
+<button onclick="baslat()">HESAPLA</button>
 
-      if (!file1 || !file2) {
-        alert('Lütfen her iki dosyayı da seçin!');
-        return;
-      }
+<p id="durum"></p>
 
-      Promise.all([readFile(file1), readFile(file2)]).then(([stokWB, planWB]) => {
-        const stokSheet = XLSX.utils.sheet_to_json(stokWB.Sheets[stokWB.SheetNames[0]]);
-        const planSheet = XLSX.utils.sheet_to_json(planWB.Sheets[planWB.SheetNames[0]], { defval: "" });
+</div>
 
-        const stoklar = {};
-        stokSheet.forEach(row => {
-          const nokta = toText(row["SORGULAMA_NOKTASI"]);
-          if (nokta === "MONTAJ" || nokta === "AYAR" || nokta === "SONMONTAJ") {
-            const kod = toText(row["SASI_KODU_3"]);
-            const adet = Number(row["ADETLER"]) || 0;
-            stoklar[kod] = (stoklar[kod] || 0) + adet;
-          }
-        });
+<script>
 
-        const updated = planSheet.map(row => ({ ...row }));
+function first3(v){
+if(!v) return ""
+return v.toString().substring(0,3)
+}
 
-        Object.entries(stoklar).forEach(([kod3, adet]) => {
-          let kalanStok = adet;
-          if (kalanStok <= 0) return;
+async function readExcel(file){
+const data = await file.arrayBuffer()
+const wb = XLSX.read(data)
+const ws = wb.Sheets[wb.SheetNames[0]]
+return XLSX.utils.sheet_to_json(ws,{defval:0})
+}
 
-          // Gün öncelik sırasını belirle (GENEL - tüm Excel için)
-          const gunSirasi = ["BUGUN"]; // Her zaman BUGUN ile başla
+async function baslat(){
 
-          // BUGUN'un altındaki günleri say
-          const bugunAltindakiGunler = {};
-          for (let i = 0; i < updated.length - 1; i++) { // -1 çünkü altındakine bakıyoruz
-            const mevcutGun = toText(Object.values(updated[i])[12]);
-            const altindakiGun = toText(Object.values(updated[i + 1])[12]);
+document.getElementById("durum").innerText="Dosyalar okunuyor..."
 
-            if (mevcutGun === "BUGUN" && altindakiGun && altindakiGun !== "BUGUN") {
-              bugunAltindakiGunler[altindakiGun] = (bugunAltindakiGunler[altindakiGun] || 0) + 1;
-            }
-          }
+const stokFile=document.getElementById("stok").files[0]
+const uretimFile=document.getElementById("uretim").files[0]
+const montajFile=document.getElementById("montaj").files[0]
 
-          // En çok olan günü bul
-          let enCokGun = "";
-          let enCokSayi = 0;
-          Object.entries(bugunAltindakiGunler).forEach(([gun, sayi]) => {
-            if (sayi > enCokSayi) {
-              enCokSayi = sayi;
-              enCokGun = gun;
-            }
-          });
+if(!stokFile || !uretimFile || !montajFile){
+alert("3 Excel dosyasını seçmelisiniz")
+return
+}
 
-          if (enCokGun) {
-            gunSirasi.push(enCokGun);
+const stok=await readExcel(stokFile)
+const uretim=await readExcel(uretimFile)
 
-            // En çok günden sonraki günleri Excel sırasına göre ekle
-            let enCokGunBulundu = false;
-            for (let i = 0; i < updated.length; i++) {
-              const gun = toText(Object.values(updated[i])[12]);
-              if (gun === enCokGun && !enCokGunBulundu) {
-                enCokGunBulundu = true;
-              } else if (enCokGunBulundu && gun && gun !== "BUGUN" && gun !== enCokGun && !gunSirasi.includes(gun)) {
-                gunSirasi.push(gun);
-              }
-            }
-          }
+let stokMap={}
 
-          // Belirlenen gün sırasına göre stok düş
-          for (const gun of gunSirasi) {
-            if (kalanStok <= 0) break;
+stok.forEach(r=>{
+if(r.SORGULAMA_NOKTASI=="AYAR" || r.SORGULAMA_NOKTASI=="MONTAJ"){
+let kod=first3(r.SASI_KODU)
+stokMap[kod]=(stokMap[kod]||0)+Number(r.ADETLER)
+}
+})
 
-            // Bu gün için Excel'in en üstünden başla
-            for (let i = 0; i < updated.length; i++) {
-              if (kalanStok <= 0) break;
+uretim.forEach(r=>{
+let kod=first3(r.SASI_KODU)
+stokMap[kod]=(stokMap[kod]||0)+Number(r.ADETLER)
+})
 
-              const row = updated[i];
-              const mamulKodu = toText(Object.values(row)[4]);
-              const satirGun = toText(Object.values(row)[12]);
-              const planAdet = Number(row["PLAN"]) || 0;
+document.getElementById("durum").innerText="Montaj dosyası okunuyor..."
 
-              if (mamulKodu.startsWith(kod3) && satirGun === gun && planAdet > 0) {
-                if (planAdet <= kalanStok) {
-                  kalanStok -= planAdet;
-                  updated[i]["PLAN"] = 0;
-                } else {
-                  updated[i]["PLAN"] = planAdet - kalanStok;
-                  kalanStok = 0;
-                }
-              }
-            }
-          }
-        });
+const data=await montajFile.arrayBuffer()
+const wb=XLSX.read(data)
+const ws=wb.Sheets["MONTAJPROGRAM"]
 
-        const header = Object.keys(updated[0]);
-        const aoa = [header];
-        updated.forEach(row => {
-          aoa.push(header.map(h => row[h]));
-        });
+let rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:""})
 
-        const ws = XLSX.utils.aoa_to_sheet(aoa);
-        const range = XLSX.utils.decode_range(ws['!ref']);
+rows = rows.filter(r => r.some(c => c !== ""))
 
-        for (let R = range.s.r; R <= range.e.r; ++R) {
-          for (let C = range.s.c; C <= range.e.c; ++C) {
-            const cellRef = XLSX.utils.encode_cell({ r: R, c: C });
-            const cell = ws[cellRef];
-            if (!cell.s) cell.s = {};
-            cell.s.font = { sz: 8 }; // Font boyutu 8
+let header = rows[0]
 
-            cell.s.border = {
-              top: { style: "thin", color: { rgb: "000000" } },
-              bottom: { style: "thin", color: { rgb: "000000" } },
-              left: { style: "thin", color: { rgb: "000000" } },
-              right: { style: "thin", color: { rgb: "000000" } },
-            };
+let sasiCol = header.findIndex(h=>String(h).toUpperCase().includes("SASI"))
+let planCol = header.findIndex(h=>String(h).toUpperCase().includes("PLAN"))
+let gunCol  = header.findIndex(h=>String(h).toUpperCase().includes("GÜN"))
 
-            if (C === 4) {
-              cell.s.fill = { fgColor: { rgb: "CCFFFF" } };
-            }
-            if (C === 9) {
-              cell.s.fill = { fgColor: { rgb: "CCFFCC" } };
-            }
-          }
-        }
+const days=["BUGUN","PAZARTESİ","SALI","ÇARŞAMBA","PERŞEMBE","CUMA","CUMARTESİ","PAZAR"]
 
-        const wbOut = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wbOut, ws, "q1");
-        XLSX.writeFile(wbOut, "Guncel_PLAN.xlsx");
-      });
-    }
-  </script>
+let start=document.getElementById("gun").value.split(",")
+let order=[...start]
+
+days.forEach(d=>{
+if(!order.includes(d)) order.push(d)
+})
+
+let dataRows = rows.slice(1)
+
+dataRows.sort((a,b)=>{
+return order.indexOf(a[gunCol]) - order.indexOf(b[gunCol])
+})
+
+dataRows.forEach(r=>{
+
+let kod=first3(r[sasiCol])
+let plan=Number(r[planCol])||0
+let stok=stokMap[kod]||0
+
+if(stok<=0) return
+
+if(stok>=plan){
+stokMap[kod]-=plan
+r[planCol]=0
+}else{
+r[planCol]=plan-stok
+stokMap[kod]=0
+}
+
+})
+
+dataRows = dataRows.filter(r => Number(r[planCol]) !== 0)
+
+rows=[header,...dataRows]
+
+let removeCols=[6,5,3,1]
+
+removeCols.forEach(col=>{
+rows.forEach(r=>{
+r.splice(col,1)
+})
+})
+
+let colCount=rows[0].length
+
+for(let c=colCount-1;c>=0;c--){
+
+let empty=true
+
+for(let r=0;r<rows.length;r++){
+if(rows[r][c]!=="" && rows[r][c]!=null){
+empty=false
+break
+}
+}
+
+if(empty){
+rows.forEach(row=>row.splice(c,1))
+}
+
+}
+
+const newWs=XLSX.utils.aoa_to_sheet(rows)
+
+for(let r=0;r<rows.length;r++){
+
+let rowIndex=r+1
+
+for(let c=0;c<rows[0].length;c++){
+
+let colLetter=XLSX.utils.encode_col(c)
+let cellRef=colLetter+rowIndex
+
+if(!newWs[cellRef]) continue
+
+let style={
+font:{name:"Calibri",sz:9,color:{rgb:"000000"}}
+}
+
+if(["A","D","E","H","J"].includes(colLetter)){
+style.font.color={rgb:"808080"}
+}
+
+if(colLetter==="K"){
+style.font.color={rgb:"000080"}
+}
+
+if(colLetter==="B"){
+style.fill={fgColor:{rgb:"AFEEEE"}}
+}
+
+newWs[cellRef].s=style
+
+}
+
+}
+
+/* AUTO COLUMN WIDTH */
+
+let cols=[]
+
+for(let c=0;c<rows[0].length;c++){
+
+let max=0
+
+for(let r=0;r<rows.length;r++){
+
+let val=rows[r][c]
+
+if(val){
+max=Math.max(max,val.toString().length)
+}
+
+}
+
+let width=Math.max(max+2,9)
+
+cols.push({wch:width})
+
+}
+
+newWs["!cols"]=cols
+
+/* HEADER FREEZE */
+
+newWs["!freeze"]={xSplit:0,ySplit:1}
+
+/* AUTOFILTER */
+
+newWs["!autofilter"] = { ref: XLSX.utils.encode_range({
+s:{r:0,c:0},
+e:{r:rows.length-1,c:rows[0].length-1}
+}) }
+
+const newWb=XLSX.utils.book_new()
+XLSX.utils.book_append_sheet(newWb,newWs,"MONTAJPROGRAM")
+
+XLSX.writeFile(newWb,"MONTAJ_PROGRAM_GUNCEL.xlsx")
+
+document.getElementById("durum").innerText="Tamamlandı"
+
+}
+
+</script>
+
 </body>
-
 </html>
