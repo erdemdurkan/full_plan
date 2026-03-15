@@ -55,16 +55,8 @@ justify-content:center;
 font-size:22px;
 }
 
-.header h2{
-margin:0;
-font-weight:600;
-}
-
-.header p{
-margin:0;
-font-size:13px;
-opacity:.8;
-}
+.header h2{margin:0;font-weight:600;}
+.header p{margin:0;font-size:13px;opacity:.8;}
 
 .divider{
 border:none;
@@ -73,31 +65,43 @@ background:rgba(255,255,255,0.15);
 margin:18px 0 22px 0;
 }
 
-/* LABEL */
+label{font-size:14px;opacity:.9;display:block;margin-top:10px;}
 
-label{
-font-size:14px;
-opacity:.9;
+/* HIDDEN INPUT */
+
+input[type=file]{
+display:none;
 }
 
-/* FILE INPUT */
+/* EXCEL BUTTON */
 
-.file-input{
-width:100%;
+.file-btn{
+display:flex;
+align-items:center;
+gap:10px;
+background:rgba(255,255,255,0.08);
+padding:12px 14px;
+border-radius:10px;
+cursor:pointer;
 margin-top:6px;
-padding:10px;
-border-radius:8px;
-border:none;
-background:rgba(255,255,255,0.1);
-color:white;
-font-size:14px;
 transition:.25s;
+border:1px solid rgba(255,255,255,0.1);
 }
 
-.file-input:hover{
+.file-btn:hover{
 background:rgba(255,255,255,0.18);
-transform:scale(1.01);
+transform:translateY(-2px);
 }
+
+.file-btn img{
+width:24px;
+}
+
+.file-name{
+font-size:13px;
+opacity:.8;
+}
+
 
 /* SELECT */
 
@@ -111,20 +115,11 @@ color:white;
 font-size:14px;
 margin-top:6px;
 cursor:pointer;
-transition:.25s;
 }
-
-.select-modern:hover{
-background:rgba(255,255,255,0.20);
-}
-
-/* IMPORTANT: dropdown options readability */
 
 .select-modern option{
 background:#0f2433;
-color:#ffffff;
-font-size:14px;
-padding:8px;
+color:white;
 }
 
 /* BUTTON */
@@ -146,10 +141,6 @@ transition:.25s;
 .btn-modern:hover{
 transform:translateY(-2px);
 box-shadow:0 8px 25px rgba(0,140,255,0.45);
-}
-
-.btn-modern:active{
-transform:scale(.97);
 }
 
 #durum{
@@ -182,13 +173,25 @@ to{opacity:1;transform:translateY(0);}
 <hr class="divider">
 
 <label>EX_STOK.xlsx</label>
-<input class="file-input" type="file" id="stok"><br><br>
+<label class="file-btn">
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/73/Microsoft_Excel_2013-2019_logo.svg">
+<span class="file-name" id="stokText">Excel dosyası seç</span>
+<input type="file" id="stok" onchange="fileName('stok','stokText')">
+</label>
 
 <label>EX_URETIM2.xlsx</label>
-<input class="file-input" type="file" id="uretim"><br><br>
+<label class="file-btn">
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/73/Microsoft_Excel_2013-2019_logo.svg">
+<span class="file-name" id="uretimText">Excel dosyası seç</span>
+<input type="file" id="uretim" onchange="fileName('uretim','uretimText')">
+</label>
 
 <label>MONTAJ_PROGRAM_OLUSTUR.xlsm</label>
-<input class="file-input" type="file" id="montaj"><br><br>
+<label class="file-btn">
+<img src="https://upload.wikimedia.org/wikipedia/commons/7/73/Microsoft_Excel_2013-2019_logo.svg">
+<span class="file-name" id="montajText">Excel dosyası seç</span>
+<input type="file" id="montaj" onchange="fileName('montaj','montajText')">
+</label>
 
 <label>Gün sıralaması</label>
 
@@ -211,6 +214,13 @@ to{opacity:1;transform:translateY(0);}
 </div>
 
 <script>
+
+function fileName(inputId,textId){
+const file=document.getElementById(inputId).files[0]
+if(file){
+document.getElementById(textId).innerText="✓ "+file.name
+}
+}
 
 function first3(v){
 if(!v) return ""
