@@ -63,6 +63,60 @@ height:1px;
 background:rgba(255,255,255,0.15);
 margin-bottom:20px;
 }
+  /* LABEL */
+
+label{
+font-size:13px;
+color:#cfd8dc;
+margin-top:10px;
+display:block;
+}
+
+/* FILE INPUT */
+
+.file-input{
+width:100%;
+margin-top:6px;
+padding:8px;
+border-radius:6px;
+border:none;
+background:rgba(255,255,255,0.1);
+color:white;
+font-size:13px;
+}
+
+/* SELECT */
+
+.select-modern{
+width:100%;
+padding:8px;
+border-radius:6px;
+border:none;
+background:rgba(255,255,255,0.1);
+color:white;
+margin-top:6px;
+}
+
+/* BUTTON */
+
+.btn-modern{
+margin-top:15px;
+width:100%;
+padding:12px;
+border:none;
+border-radius:8px;
+font-size:14px;
+font-weight:600;
+background:linear-gradient(135deg,#0aa6ff,#0077ff);
+color:white;
+cursor:pointer;
+transition:0.2s;
+}
+
+.btn-modern:hover{
+transform:translateY(-1px);
+box-shadow:0 5px 15px rgba(0,150,255,0.4);
+}
 </style>
 
 </head>
@@ -82,17 +136,17 @@ margin-bottom:20px;
 <hr class="divider">
 
 <p>EX_STOK.xlsx</p>
-<input type="file" id="stok"><br><br>
+<input class="file-input" type="file" id="stok"><br><br>
 
 <p>EX_URETIM2.xlsx</p>
-<input type="file" id="uretim"><br><br>
+<input class="file-input" type="file" id="uretim"><br><br>
 
 <p>MONTAJ_PROGRAM_OLUSTUR.xlsm</p>
-<input type="file" id="montaj"><br><br>
+<input class="file-input" type="file" id="montaj"><br><br>
 
 <p>Gün sıralaması</p>
 
-<select id="gun">
+<select id="gun" class="select-modern">
 <option value="BUGUN,CUMARTESİ,PAZAR">BUGUN,CUMARTESİ,PAZAR</option>
 <option value="BUGUN,PAZAR,PAZARTESİ">BUGUN,PAZAR,PAZARTESİ</option>
 <option value="BUGUN,PAZARTESİ,SALI">BUGUN,PAZARTESİ,SALI</option>
@@ -103,7 +157,9 @@ margin-bottom:20px;
 </select>
 
 <br>
-<button onclick="baslat()">HESAPLA</button>
+<button class="btn-modern" onclick="baslat()">
+⚡ Hesapla
+</button>
 
 <p id="durum"></p>
 
