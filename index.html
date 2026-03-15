@@ -20,149 +20,14 @@ padding-left:60px;
 }
 .panel{
 background:rgba(0,0,0,0.65);
-padding:25px;
-border-radius:10px;
+padding:30px;
+border-radius:12px;
 width:640px;
 color:white;
-backdrop-filter: blur(6px);
+backdrop-filter:blur(8px);
+box-shadow:0 10px 40px rgba(0,0,0,0.5);
 }
 button{padding:10px 18px;font-size:16px;margin-top:12px}
-  .header{
-display:flex;
-align-items:center;
-gap:15px;
-margin-bottom:20px;
-}
-
-.header-icon{
-font-size:28px;
-background:#0aa6ff;
-width:46px;
-height:46px;
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:10px;
-}
-
-.header h1{
-margin:0;
-font-size:22px;
-font-weight:600;
-}
-
-.header p{
-margin:0;
-font-size:13px;
-color:#cfd8dc;
-}
-
-.divider{
-border:none;
-height:1px;
-background:rgba(255,255,255,0.15);
-margin-bottom:20px;
-}
-  /* LABEL */
-
-label{
-font-size:13px;
-color:#cfd8dc;
-margin-top:10px;
-display:block;
-}
-
-/* FILE INPUT */
-
-.file-input{
-width:100%;
-margin-top:6px;
-padding:8px;
-border-radius:6px;
-border:none;
-background:rgba(255,255,255,0.1);
-color:white;
-font-size:13px;
-}
-
-/* SELECT */
-
-.select-modern{
-width:100%;
-padding:8px;
-border-radius:6px;
-border:none;
-background:rgba(255,255,255,0.1);
-color:white;
-margin-top:6px;
-}
-
-/* BUTTON */
-
-.btn-modern{
-margin-top:15px;
-width:100%;
-padding:12px;
-border:none;
-border-radius:8px;
-font-size:14px;
-font-weight:600;
-background:linear-gradient(135deg,#0aa6ff,#0077ff);
-color:white;
-cursor:pointer;
-transition:0.2s;
-}
-
-.btn-modern:hover{
-transform:translateY(-1px);
-box-shadow:0 5px 15px rgba(0,150,255,0.4);
-}
-  .upload-box{
-margin-bottom:18px;
-}
-
-.upload-content{
-text-align:center;
-pointer-events:none;
-}
-
-.drop-area:hover{
-background:rgba(0,170,255,0.12);
-border-color:#0aa6ff;
-}
-
-.drop-area input{
-position:absolute;
-width:100%;
-height:100%;
-opacity:0;
-cursor:pointer;
-}
-
-.upload-content{
-text-align:center;
-}
-
-.upload-icon{
-font-size:28px;
-transition:0.3s;
-}
-
-.drop-area:hover .upload-icon{
-transform:scale(1.2) rotate(-8deg);
-}
-
-.upload-text{
-font-size:13px;
-color:#cfd8dc;
-margin-top:5px;
-}
-
-.file-name{
-margin-top:6px;
-font-size:12px;
-color:#4fc3f7;
-}
 </style>
 
 </head>
@@ -171,55 +36,20 @@ color:#4fc3f7;
 
 <div class="panel">
 
-<div class="header">
-    <div class="header-icon">⚙️</div>
-    <div>
-        <h1>Montaj Program</h1>
-        <p>Excel montaj planını otomatik güncelle</p>
-    </div>
-</div>
+<h2>Montaj Program Güncelle</h2>
 
-<hr class="divider">
+<p>EX_STOK.xlsx</p>
+<input type="file" id="stok"><br><br>
 
-<div class="upload-box">
-    <label>EX_STOK.xlsx</label>
-    <div class="drop-area" id="stokArea">
-        <input type="file" id="stok">
-        <div class="upload-content">
-            <div class="upload-icon">📂</div>
-            <div class="upload-text">Dosya seç veya sürükle bırak</div>
-            <div class="file-name" id="stokName"></div>
-        </div>
-    </div>
-</div>
+<p>EX_URETIM2.xlsx</p>
+<input type="file" id="uretim"><br><br>
 
-<div class="upload-box">
-    <label>EX_URETIM2.xlsx</label>
-    <div class="drop-area" id="uretimArea">
-        <input type="file" id="uretim">
-        <div class="upload-content">
-            <div class="upload-icon">📂</div>
-            <div class="upload-text">Dosya seç veya sürükle bırak</div>
-            <div class="file-name" id="uretimName"></div>
-        </div>
-    </div>
-</div>
-
-<div class="upload-box">
-    <label>MONTAJ_PROGRAM_OLUSTUR.xlsm</label>
-    <div class="drop-area" id="montajArea">
-        <input type="file" id="montaj">
-        <div class="upload-content">
-            <div class="upload-icon">📂</div>
-            <div class="upload-text">Dosya seç veya sürükle bırak</div>
-            <div class="file-name" id="montajName"></div>
-        </div>
-    </div>
-</div>
+<p>MONTAJ_PROGRAM_OLUSTUR.xlsm</p>
+<input type="file" id="montaj"><br><br>
 
 <p>Gün sıralaması</p>
 
-<select id="gun" class="select-modern">
+<select id="gun">
 <option value="BUGUN,CUMARTESİ,PAZAR">BUGUN,CUMARTESİ,PAZAR</option>
 <option value="BUGUN,PAZAR,PAZARTESİ">BUGUN,PAZAR,PAZARTESİ</option>
 <option value="BUGUN,PAZARTESİ,SALI">BUGUN,PAZARTESİ,SALI</option>
@@ -230,9 +60,7 @@ color:#4fc3f7;
 </select>
 
 <br>
-<button type="button" class="btn-modern" onclick="baslat()">
-⚡ Hesapla
-</button>
+<button onclick="baslat()">HESAPLA</button>
 
 <p id="durum"></p>
 
@@ -254,7 +82,6 @@ return XLSX.utils.sheet_to_json(ws,{defval:0})
 
 async function baslat(){
 
-  document.getElementById("hesaplaBtn").addEventListener("click", baslat);
 document.getElementById("durum").innerText="Dosyalar okunuyor..."
 
 const stokFile=document.getElementById("stok").files[0]
@@ -443,24 +270,6 @@ XLSX.writeFile(newWb,"MONTAJ_PROGRAM_GUNCEL.xlsx")
 document.getElementById("durum").innerText="Tamamlandı"
 
 }
-  function showFileName(inputId, labelId){
-
-document.getElementById(inputId).addEventListener("change",function(){
-
-if(this.files.length>0){
-
-document.getElementById(labelId).innerText =
-"✔ " + this.files[0].name
-
-}
-
-})
-
-}
-
-showFileName("stok","stokName")
-showFileName("uretim","uretimName")
-showFileName("montaj","montajName")
 
 </script>
 
